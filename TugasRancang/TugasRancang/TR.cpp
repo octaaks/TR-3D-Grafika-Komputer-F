@@ -3,7 +3,12 @@
 
 void init(void);
 void ukuran(int, int);
+void keyboard(unsigned char, int, int);
 
+int is_depth;
+float xmov = 0.0f;
+float ymov = 0.0f;
+float zmov = 0.0f;
 float xrot = 0.0f;
 float yrot = 0.0f;
 float zrot = 0.0f;
@@ -15,6 +20,8 @@ void display(){
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+	glTranslatef(xmov, ymov, zmov);
+
 
 	glRotatef(xrot, 1.0f, 0.0f, 0.0f);
 	glRotatef(yrot, 0.0f, 1.0f, 0.0f);
@@ -284,6 +291,54 @@ void mouseMotion(int x, int y)
 	}
 }
 
+void keyboard(unsigned char key, int x, int y)
+{
+	switch (key)
+	{
+	case 'w':
+	case 'W':
+		zmov += 10;
+		break;
+	case 'd':
+	case 'D':
+		xmov += 10;
+		break;
+	case 's':
+	case 'S':
+		zmov -= 10;
+		break;
+	case 'a':
+	case 'A':
+		xmov -= 10;
+		break;
+	case '7':
+		ymov += 10;
+		break;
+	case '9':
+		ymov -= 10;
+		break;
+	case '2':
+		xrot += 10;
+		break;
+	case '8':
+		xrot -= 10;
+		break;
+	case '6':
+		yrot += 10;
+		break;
+	case '4':
+		yrot -= 10;
+		break;
+	case '1':
+		zrot += 10;
+		break;
+	case '3':
+		zrot -= 10;
+		break;
+	}
+	glutPostRedisplay();
+}
+
 int main(int argc, char **argv)
 {
 	glutInit(&argc, argv);
@@ -296,6 +351,7 @@ int main(int argc, char **argv)
 	glutIdleFunc(display);
 	glutMouseFunc(mouse);
 	glutMotionFunc(mouseMotion);
+	glutKeyboardFunc(keyboard);
 	init();
 	glutMainLoop();
 	return 0;
