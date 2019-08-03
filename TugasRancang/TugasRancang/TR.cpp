@@ -243,6 +243,34 @@ void init(void)
 	glEnable(GL_NORMALIZE);
 	glEnable(GL_COLOR_MATERIAL);
 	glMatrixMode(GL_MODELVIEW);
+
+	//pencahayaan
+	glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+
+	//set cahaya
+	GLfloat qaAmbientLight[] = { 0.7,0.7,0.7,1.0 };
+	GLfloat qaDiffuseLight[] = { 0.7,0.7,0.7,1 };
+	GLfloat qaSpecularLight[] = { 0.7,0.7,0.7,1 };
+	GLfloat mat_shininess[] = {50.0f};
+
+	glLightfv(GL_LIGHT0, GL_AMBIENT, qaAmbientLight);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, qaDiffuseLight);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, qaSpecularLight);
+    glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess); 
+
+	//posisi cahaya
+	GLfloat posisilampu[] = {20,10,50 ,1 };
+    GLfloat directedLight[] = {0.7f, 0.7f, 0.7f, 1.0f};
+
+	glLightfv(GL_LIGHT0, GL_POSITION, posisilampu);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, directedLight);
+  
+	glEnable(GL_COLOR_MATERIAL);
+	glShadeModel(GL_SMOOTH);
+	glMatrixMode(GL_MODELVIEW);
+
 	glPointSize(9.0);
 	glLineWidth(5.0f);
 }
