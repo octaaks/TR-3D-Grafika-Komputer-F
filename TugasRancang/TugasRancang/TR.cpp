@@ -16,17 +16,22 @@ float xdiff = 0.0f;
 float ydiff = 0.0f;
 bool mouseDown = false;
 
+//muter-muter function variable :v
+float angle = 0.0;
+bool muter = true;
+
 void display(){
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	glTranslatef(xmov, ymov, zmov);
 
-
 	glRotatef(xrot, 1.0f, 0.0f, 0.0f);
 	glRotatef(yrot, 0.0f, 1.0f, 0.0f);
 	
+	glRotatef(angle,0.0f, 0.1f, .0f);
 	glScalef(50.0f,50.0f,50.0f);
+	glTranslatef(0,-1,0);
 	
 	glBegin(GL_TRIANGLES);
 	glVertex3f(0.134000, 1.020300, -0.083900); glTexCoord2f(0.611900, 0.886700);	glVertex3f(0.085300, 1.111800, -0.061300); glTexCoord2f(0.638400, 0.939600);	glVertex3f(0.146100, 1.099700, 0.018800); glTexCoord2f(0.580300, 0.950300);
@@ -302,7 +307,6 @@ void display(){
 	glTexCoord2f(0.192900, 0.586400);	
 	glVertex3f(-0.147200, 0.463700, -0.075500); 
 	glTexCoord2f(0.145800, 0.583400);
-
 
 	glVertex3f(-0.147200, 0.463700, -0.075500); 
 	glTexCoord2f(0.145800, 0.583400);	
@@ -3868,7 +3872,7 @@ void display(){
 
 void init(void)
 {
-	glClearColor(0.25, 0.25, 0.25, 1.0);
+	glClearColor(0.15, 0.15, 0.15, 1.0);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
 	glEnable(GL_NORMALIZE);
@@ -3884,7 +3888,7 @@ void init(void)
 	GLfloat qaAmbientLight[] = { 0.7,0.7,0.7,1.0 };
 	GLfloat qaDiffuseLight[] = { 0.7,0.7,0.7,1 };
 	GLfloat qaSpecularLight[] = { 0.7,0.7,0.7,1 };
-	GLfloat mat_shininess[] = {50.0f};
+	GLfloat mat_shininess[] = {100};
 
 	glLightfv(GL_LIGHT0, GL_AMBIENT, qaAmbientLight);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, qaDiffuseLight);
@@ -3892,7 +3896,7 @@ void init(void)
     glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess); 
 
 	//posisi cahaya
-	GLfloat posisilampu[] = {20,10,50 ,1 };
+	GLfloat posisilampu[] = {0,30,100 ,1 };
     GLfloat directedLight[] = {0.7f, 0.7f, 0.7f, 1.0f};
 
 	glLightfv(GL_LIGHT0, GL_POSITION, posisilampu);
@@ -3998,6 +4002,22 @@ void keyboard(unsigned char key, int x, int y)
 	glutPostRedisplay();
 }
 
+
+void muterFunc(int value){
+
+	if(muter){
+		angle +=0.5f;
+		if(angle>360.f){
+			angle-=360;
+		}
+		glutPostRedisplay();
+		glutTimerFunc(25,muterFunc,0);
+	}else{
+		glutPostRedisplay();
+		glutTimerFunc(25,muterFunc,0);
+	}
+}
+
 int main(int argc, char **argv)
 {
 	glutInit(&argc, argv);
@@ -4011,6 +4031,7 @@ int main(int argc, char **argv)
 	glutMouseFunc(mouse);
 	glutMotionFunc(mouseMotion);
 	glutKeyboardFunc(keyboard);
+	glutTimerFunc(25,muterFunc,0);
 	init();
 	glutMainLoop();
 	return 0;
