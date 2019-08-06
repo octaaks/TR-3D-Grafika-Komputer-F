@@ -1,5 +1,6 @@
 #include<windows.h>
 #include <gl/glut.h>
+#include "imageloader.h"
 
 void init(void);
 void ukuran(int, int);
@@ -20,6 +21,29 @@ bool mouseDown = false;
 float angle = 0.0;
 bool muter = true;
 
+GLuint texture[35];
+
+//Makes the image into a texture, and returns the id of the texture
+GLuint loadTexture(Image* image) {
+	GLuint textureId;
+	glGenTextures(1, &textureId); //Make room for our texture
+	glBindTexture(GL_TEXTURE_2D, textureId); //Tell OpenGL which texture to edit
+	//Map the image to the texture
+	glTexImage2D(GL_TEXTURE_2D,                //Always GL_TEXTURE_2D
+				 0,                            //0 for now
+				 GL_RGB,                       //Format OpenGL uses for image
+				 image->width, image->height,  //Width and height
+				 0,                            //The border of the image
+				 GL_RGB, //GL_RGB, because pixels are stored in RGB format
+				 GL_UNSIGNED_BYTE, //GL_UNSIGNED_BYTE, because pixels are stored
+				                   //as unsigned numbers
+				 image->pixels);               //The actual pixel data
+	return textureId; //Returns the id of the texture
+}
+
+GLuint _textureId; //The id of the texture
+
+
 void display(){
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
@@ -32,7 +56,12 @@ void display(){
 	glRotatef(angle,0.0f, 0.1f, .0f);
 	glScalef(50.0f,50.0f,50.0f);
 	glTranslatef(0,-1,0);
-	
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glBindTexture(GL_TEXTURE_2D, _textureId);
+
+	glEnable(GL_TEXTURE_2D);
 	glBegin(GL_TRIANGLES);
 	glVertex3f(0.134000, 1.020300, -0.083900); glTexCoord2f(0.611900, 0.886700);	glVertex3f(0.085300, 1.111800, -0.061300); glTexCoord2f(0.638400, 0.939600);	glVertex3f(0.146100, 1.099700, 0.018800); glTexCoord2f(0.580300, 0.950300);
 	glVertex3f(0.146100, 1.099700, 0.018800); glTexCoord2f(0.580300, 0.950300);	glVertex3f(0.179500, 1.019800, 0.004200); glTexCoord2f(0.567700, 0.902600);	glVertex3f(0.134000, 1.020300, -0.083900); glTexCoord2f(0.611900, 0.886700);
@@ -3866,6 +3895,7 @@ void display(){
 	glTexCoord2f(0.844600, 0.742700);
 
 	glEnd();
+	glDisable(GL_TEXTURE_2D);
 	glFlush();
 	glutSwapBuffers();
 }
@@ -3902,6 +3932,12 @@ void init(void)
 	glLightfv(GL_LIGHT0, GL_POSITION, posisilampu);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, directedLight);
   
+	//texture
+
+	Image* image = loadBMP("Woman1.bmp");
+	_textureId = loadTexture(image);
+	delete image;
+
 	glEnable(GL_COLOR_MATERIAL);
 	glShadeModel(GL_SMOOTH);
 	glMatrixMode(GL_MODELVIEW);
