@@ -3958,6 +3958,21 @@ void keyboard(unsigned char key, int x, int y)
 {
 	switch (key)
 	{
+	case 'p':
+	case 'P':
+		if(muter){
+			muter = false;
+			xrot = 0.0f;
+			yrot = 0.0f;
+			zrot = 0.0f;
+			xmov = 0.0f;
+			ymov = 0.0f;
+			zmov = 0.0f;
+			xdiff = 0.0f;
+			ydiff = 0.0f;
+		}else{
+			muter = true;
+		}
 	case 'w':
 	case 'W':
 		zmov += 10;
