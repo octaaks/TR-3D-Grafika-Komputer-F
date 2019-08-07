@@ -54,15 +54,24 @@ void display(){
 	glRotatef(yrot, 0.0f, 1.0f, 0.0f);
 	
 	glRotatef(angle,0.0f, 0.1f, .0f);
-	glScalef(50.0f,50.0f,50.0f);
+	glScalef(65.0f,65.0f,65.0f);
 	glTranslatef(0,-1,0);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glBindTexture(GL_TEXTURE_2D, _textureId);
 
+	glBegin(GL_QUADS);
+	glColor3f(0.2, 0.2, 0.2);
+	glVertex3f(0.4, -.01,-0.4);
+	glVertex3f(-0.4,-.01,-0.4);
+	glVertex3f(-0.4,-.01, 0.4);
+	glVertex3f(0.4, -.01, 0.4);
+	glEnd();
+
 	glEnable(GL_TEXTURE_2D);
 	glBegin(GL_TRIANGLES);
+	glColor3f(1, 1, 1);
 	glTexCoord2f(0.611900, 0.886700); glVertex3f(0.134000, 1.020300, -0.083900);	glTexCoord2f(0.638400, 0.939600); glVertex3f(0.085300, 1.111800, -0.061300);	glTexCoord2f(0.580300, 0.950300); glVertex3f(0.146100, 1.099700, 0.018800);
 	glTexCoord2f(0.580300, 0.950300); glVertex3f(0.146100, 1.099700, 0.018800);	glTexCoord2f(0.567700, 0.902600); glVertex3f(0.179500, 1.019800, 0.004200);	glTexCoord2f(0.611900, 0.886700); glVertex3f(0.134000, 1.020300, -0.083900);
 	glTexCoord2f(0.472400, 0.929900); glVertex3f(0.087900, 0.997000, 0.133900);	glTexCoord2f(0.518800, 0.917600); glVertex3f(0.161200, 1.011700, 0.090200);	glTexCoord2f(0.534800, 0.961100); glVertex3f(0.131500, 1.088300, 0.086600);
@@ -3656,9 +3665,9 @@ void init(void)
 	glEnable(GL_LIGHT0);
 
 	//set cahaya
-	GLfloat qaAmbientLight[] = { 0.7,0.7,0.7,1.0 };
-	GLfloat qaDiffuseLight[] = { 0.7,0.7,0.7,1 };
-	GLfloat qaSpecularLight[] = { 0.7,0.7,0.7,1 };
+	GLfloat qaAmbientLight[] = {0.7,0.7,0.7,1};
+	GLfloat qaDiffuseLight[] = {0.7,0.7,0.7,1};
+	GLfloat qaSpecularLight[] = {0.7,0.7,0.7,1};
 	GLfloat mat_shininess[] = {100};
 
 	glLightfv(GL_LIGHT0, GL_AMBIENT, qaAmbientLight);
@@ -3667,7 +3676,7 @@ void init(void)
     glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess); 
 
 	//posisi cahaya
-	GLfloat posisilampu[] = {0,30,100 ,1 };
+	GLfloat posisilampu[] = {50,50,50 ,1 };
     GLfloat directedLight[] = {0.7f, 0.7f, 0.7f, 1.0f};
 
 	glLightfv(GL_LIGHT0, GL_POSITION, posisilampu);
@@ -3816,7 +3825,7 @@ int main(int argc, char **argv)
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
 	glutInitWindowSize(800, 600);
 	glutInitWindowPosition(200, 80);
-	glutCreateWindow("");
+	glutCreateWindow("672017070 - 672017083 - 672017164");
 	glutDisplayFunc(display);
 	glutReshapeFunc(ukuran);
 	glutIdleFunc(display);
