@@ -3825,7 +3825,7 @@ int main(int argc, char **argv)
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
 	glutInitWindowSize(800, 600);
 	glutInitWindowPosition(200, 80);
-	glutCreateWindow("672017070 - 672017083 - 672017164");
+	glutCreateWindow("Model 3D");
 	glutDisplayFunc(display);
 	glutReshapeFunc(ukuran);
 	glutIdleFunc(display);
